@@ -1,0 +1,8 @@
+[package]
+name = "SigmaOS-tools-mongodb"
+version = "0.1.0"
+edition = "2021"
+description = "MongoDB document store and query engine"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
