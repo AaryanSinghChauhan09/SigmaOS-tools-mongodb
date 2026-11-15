@@ -1,3 +1,4 @@
+#![allow(non_snake_case)]
 //! MongoDB Document Store Engine for SigmaOS
 use std::collections::HashMap;
 
