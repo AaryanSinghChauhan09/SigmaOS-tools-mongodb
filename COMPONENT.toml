@@ -3,7 +3,7 @@ name = "SigmaOS-tools-mongodb"
 tier = 2
 stability = "scaffold"
 language = "rust"
-description = "tools-mongodb component"
+description = "tools mongodb component"
 upstream = []
 
 [contract]
