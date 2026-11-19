@@ -1,3 +1,4 @@
+#![forbid(unsafe_code)]
 #![allow(non_snake_case)]
 //! MongoDB Document Store Engine for SigmaOS
 use std::collections::HashMap;
@@ -83,5 +84,44 @@ mod tests {
         let deleted = col.delete_one("u1");
         assert!(deleted);
         assert_eq!(col.count(), 1);
+    }
+}
+
+
+#[cfg(test)]
+mod mongodb_extra_tests {
+    use super::*;
+
+    #[test]
+    fn test_mongodb_find_non_existent_key_aaa() {
+        // Arrange
+        let col = MongoCollection::new("logs");
+        // Act
+        let res = col.find("missing_key", "val");
+        // Assert
+        assert!(res.is_empty());
+    }
+
+    #[test]
+    fn test_mongodb_delete_non_existent_returns_false_aaa() {
+        // Arrange
+        let mut col = MongoCollection::new("logs");
+        // Act
+        let deleted = col.delete_one("ghost_id");
+        // Assert
+        assert!(!deleted);
+        assert_eq!(col.count(), 0);
+    }
+
+    #[test]
+    fn test_mongodb_duplicate_insert_error_aaa() {
+        // Arrange
+        let mut col = MongoCollection::new("logs");
+        let doc = MongoDocument { id: "1".into(), fields: HashMap::new() };
+        col.insert_one(doc.clone()).unwrap();
+        // Act
+        let res = col.insert_one(doc);
+        // Assert
+        assert!(res.is_err());
     }
 }
